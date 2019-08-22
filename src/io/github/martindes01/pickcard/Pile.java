@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+// TODO simplify index checking, see https://stackoverflow.com/questions/12099721/how-to-use-sublist
+
 // TODO javadoc
 public class Pile {
 	
@@ -36,16 +38,6 @@ public class Pile {
 	public Pile(Collection<Card> collection) {
 		cards = new ArrayList<>(collection);
 	}
-	
-//	/**
-//	 * Constructs a new pile containing the specified {@link ArrayList} of {@link Card} objects.
-//	 * 
-//	 * @param list - the array list of cards to be wrapped by this pile
-//	 * @see Card
-//	 */
-//	public Pile(ArrayList<Card> list) {
-//		cards = list;
-//	}
 	
 	
 	// Helper functions
@@ -137,20 +129,6 @@ public class Pile {
 		return cards.size();
 	}
 	
-//	/**
-//	 * Places the cards in the specified list on top of this pile.
-//	 * 
-//	 * @param list - list containing cards to be added to this pile
-//	 * @return the new size of this pile
-//	 */
-//	public int addCards(ArrayList<Card> list) {
-//		// Prevent NullPointerException (thrown if list null)
-//		if (list != null) { 
-//			cards.addAll(list); 
-//		} 
-//		return cards.size();
-//	}
-	
 	/**
 	 * Inserts the cards in the specified collection at the specified position in this pile.
 	 * Pushes the cards currently at that position (if any) and any cards above them towards the top of this pile (increases their indices).
@@ -172,28 +150,6 @@ public class Pile {
 		} 
 		return cards.size();
 	}
-	
-//	/**
-//	 * Inserts the cards in the specified list at the specified position in this pile.
-//	 * Pushes the cards currently at that position (if any) and any cards above them towards the top of this pile (increases their indices).
-//	 * <p>
-//	 * An index greater than or equal to the size of this pile causes the cards to be placed on top.
-//	 * An index less than or equal to the negative of the size of this pile causes the cards to be placed on the bottom.
-//	 * Any other negative index specifies the position from the top of this pile. 
-//	 * 
-//	 * @param index - index at which the first card from the specified pile is to be inserted
-//	 * @param list - list containing cards to be inserted
-//	 * @return the new size of this pile
-//	 * @see #wrapIndex(int, boolean)
-//	 */
-//	public int addCardsAt(int index, ArrayList<Card> list) {
-//		// Prevent NullPointerException (thrown if list null)
-//		if (list != null) { 
-//			// Prevent IndexOutOfBoundsException (index may be equal to size)
-//			cards.addAll(wrapIndex(index, true), list);
-//		} 
-//		return cards.size();
-//	}
 	
 	
 	// Card inclusion
@@ -225,23 +181,6 @@ public class Pile {
 		}
 	}
 	
-//	/**
-//	 * Returns {@code true} if this pile contains at least one of each of the cards in the specified list.
-//	 * Returns {@code false} if the specified list is {@code null}.
-//	 * 
-//	 * @param list - list whose cards are to be checked for containment in this pile
-//	 * @return {@code true} if this pile contains at least one of each of the cards in the specified list
-//	 */
-//	public boolean containsCards(ArrayList<Card> list) {
-//		// Prevent NullPointerException (thrown if list null)
-//		if (list != null) {
-//			return cards.containsAll(list);
-//		} else {
-//			// Return false if list null
-//			return false;			
-//		}
-//	}
-	
 	
 	// Card deletion
 	
@@ -256,31 +195,6 @@ public class Pile {
 	public boolean deleteAllOfType(Card card) {
 		return cards.removeAll(Collections.singleton(card));
 	}
-	
-//	/**
-//	 * Deletes all occurrences of the specified card from this pile, if present.
-//	 * If this pile does not contain the card, it is unchanged.
-//	 * Returns {@code true} if this pile changed as a result of the call. 
-//	 * 
-//	 * @param card - card to be deleted from this pile, if present
-//	 * @return {@code true} if this pile changed as a result of the call
-//	 */
-//	public boolean deleteAllOfType(Card card) {
-//		// Prevent NullPointerException (thrown if this.cards null)
-//		if (cards != null) {
-//			if (Collections.frequency(cards, card) > 0) {
-//				ArrayList<Card> cardsOfType = new ArrayList<>();
-//				cardsOfType.add(card);
-//				return cards.removeAll(cardsOfType);
-//			} else {
-//				// Return false if card not present
-//				return false;
-//			}
-//		} else {
-//			// Return false if this.cards null
-//			return false;
-//		}
-//	}
 	
 	/**
 	 * Deletes from this pile all of its cards that appear at least once in the specified collection.
@@ -390,29 +304,6 @@ public class Pile {
 		}
 	}
 	
-//	/**
-//	 * Returns a pile containing the specified quantity of cards from the top of this pile.
-//	 * This pile is unchanged.
-//	 * If the specified quantity is greater than or equal to the size of this pile, a copy of this pile is returned.
-//	 * 
-//	 * @param quantity - number of cards to return
-//	 * @return a pile containing the specified quantity of cards from the top of this pile
-//	 */
-//	public Pile getCards(int quantity) {
-//		// Store cards.size() as local variable to avoid multiple method calls
-//		int size = cards.size();
-//		if (quantity < size) {
-//			ArrayList<Card> gotCards = new ArrayList<>(quantity);
-//			for (int i = size - quantity; i < size; i++) {
-//				gotCards.add(cards.get(i));
-//			}
-//			return new Pile(gotCards);
-//		} else {
-//			// Return copy if quantity greater than or equal to size
-//			return this;
-//		}
-//	}
-		
 	/**
 	 * Returns a pile containing references to the specified quantity of cards from the specified position in this pile.
 	 * This pile is unchanged.
@@ -441,33 +332,6 @@ public class Pile {
 		}
 		return new Pile(cards.subList(index, index + quantity));
 	}
-	
-//	/**
-//	 * Returns a pile containing the specified quantity of cards from the specified position in this pile.
-//	 * This pile is unchanged.
-//	 * If the sum of the specified index and quantity is greater than or equal to the size of this pile, the card at the specified index and all cards above it are returned.
-//	 * <p>
-//	 * An index greater than or equal to the size of this pile returns the top card.
-//	 * An index less than or equal to the negative of the size of this pile returns the specified quantity of cards from the bottom of this pile.
-//	 * Any other negative index specifies the position from the top of this pile.
-//	 * 
-//	 * @param index - index of the first card to be returned
-//	 * @param quantity - number of cards to return
-//	 * @return a pile containing the specified quantity of cards from the specified position in this pile
-//	 * @see #wrapIndex(int, boolean)
-//	 */
-//	public Pile getCardsAt(int index, int quantity) {
-//		// Prevent IndexOutOfBoundsException
-//		index = wrapIndex(index, false);
-//		if (index + quantity > cards.size()) {
-//			quantity = cards.size() - index;
-//		}
-//		ArrayList<Card> gotCards = new ArrayList<>(quantity);
-//		for (int count = 0; count < quantity; count++) {
-//			gotCards.add(cards.get(index + count));
-//		}
-//		return new Pile(gotCards);
-//	}
 	
 	
 	// Card location
@@ -587,49 +451,6 @@ public class Pile {
 		return pile;
 	}
 	
-//	public Pile pickCards(int quantity) {
-//		Pile pile;
-//		// Store cards.size() as local variable to avoid multiple method calls
-//		int size = cards.size();
-//		// Prevent IndexOutOfBoundsException (index may be equal to size)
-//		if (quantity < size) {
-//			int fromIndex = size - quantity;
-//			pile = new Pile(cards.subList(fromIndex, size));
-//			cards.subList(fromIndex, size).clear();
-//		} else {
-//			// Return copy and empty original if quantity greater than or equal to size
-//			pile = new Pile(cards);
-//			cards.clear();
-//		}
-//		return pile;
-//	}
-	
-//	/**
-//	 * Make them so!
-//	 * <p>
-//	 * Removes the specified quantity of cards from the top of this pile.
-//	 * If the specified quantity is greater than or equal to the size of this pile, a copy of this pile is returned and the original is emptied.
-//	 * 
-//	 * @param quantity - number of cards to remove
-//	 * @return a pile containing the cards that were removed from this pile
-//	 */
-//	public Pile pickCards(int quantity) {
-//		ArrayList<Card> pickedCards = new ArrayList<>();
-//		if (quantity < cards.size()) {
-//			// Index is fixed due to card removal
-//			int fixedIndex = cards.size() - quantity;
-//			for (int i = 0; i < quantity; i++) {
-//				pickedCards.add(cards.get(fixedIndex));
-//				cards.remove(fixedIndex);
-//			}
-//		} else {
-//			// Return copy and empty original if quantity greater than or equal to size
-//			pickedCards.addAll(cards);
-//			cards.clear();
-//		}		
-//		return new Pile(pickedCards);
-//	}
-	
 	/**
 	 * Removes the specified quantity of cards from the specified position in this pile.
 	 * Lowers any cards above them (decreases their indices).
@@ -661,86 +482,6 @@ public class Pile {
 		return pile;
 	}
 	
-//	public Pile pickCardsAt(int index, int quantity) {
-//		Pile pile;
-//		// Store cards.size() as local variable to avoid multiple method calls
-//		int size = cards.size();
-//		// Prevent IndexOutOfBoundsException
-//		index = wrapIndex(index, false);
-//		if (index + quantity > size) {
-//			quantity = size - index;
-//		}
-//		int toIndex = index + quantity;
-//		pile = new Pile(cards.subList(index, toIndex));
-//		cards.subList(index, toIndex).clear();
-//		return pile;
-//	}
-	
-//	/**
-//	 * Removes the specified quantity of cards from the specified position in this pile.
-//	 * Lowers any cards above them (decreases their indices).
-//	 * If the sum of the specified index and quantity is greater than or equal to the size of this pile, the card at the specified index and all cards above it are removed.
-//	 * <p>
-//	 * An index greater than or equal to the size of this pile causes the top card to be removed from this pile.
-//	 * An index less than or equal to the negative of the size of this pile causes the specified quantity of cards to be removed from the bottom of this pile.
-//	 * Any other negative index specifies the position from the top of this pile.
-//	 * 
-//	 * @param index - index of the first card to be removed
-//	 * @param quantity - number of cards to remove
-//	 * @return a pile containing the cards that were removed from this pile
-//	 * @see #wrapIndex(int, boolean)
-//	 */
-//	public Pile pickCardsAt(int index, int quantity) {
-//		ArrayList<Card> pickedCards = new ArrayList<>();
-//		// Prevent IndexOutOfBoundsException
-//		index = wrapIndex(index, false);
-//		if (index + quantity > cards.size()) {
-//			quantity = cards.size() - index;
-//		}
-//		// Index is fixed due to card removal
-//		for (int i = 0; i < quantity; i++) {
-//			pickedCards.add(cards.get(index));
-//			cards.remove(index);
-//		}
-//		return new Pile(pickedCards);
-//	}
-	
-//	/**
-//	 * Removes the uppermost occurrence of the specified card from this pile, if present.
-//	 * If this pile does not contain the card, it is unchanged.
-//	 * Returns the card that was removed from this pile, or {@code null} if this pile did not contain the card.
-//	 * 
-//	 * @param card - card to be removed from this pile if present
-//	 * @return the card that was removed from this pile, or {@code null} if this pile did not contain the card
-//	 */
-//	public Card pickHighestOfType(Card card) {
-//		int lastIndex = cards.lastIndexOf(card);
-//		if (lastIndex != -1) {
-//			return cards.remove(lastIndex);
-//		} else {
-//			// Return null if card not present
-//			return null;
-//		}
-//	}
-//	
-//	/** 
-//	 * Removes the lowermost occurrence of the specified card from this pile, if present.
-//	 * If this pile does not contain the card, it is unchanged.
-//	 * Returns the card that was removed from this pile, or {@code null} if this pile did not contain the card.
-//	 * 
-//	 * @param card - card to be removed from this pile if present
-//	 * @return the card that was removed from this pile, or {@code null} if this pile did not contain the card
-//	 */
-//	public Card pickLowestOfType(Card card) {
-//		int index = cards.indexOf(card);
-//		if (index != -1) {			
-//			return cards.remove(index);
-//		} else {
-//			// Return null if card not present
-//			return null;
-//		}
-//	}
-	
 	
 	// Pile copying
 		
@@ -771,6 +512,7 @@ public class Pile {
 		return new Pile(copiedCards);
 	}
 	
+	
 	// Pile manipulation
 	
 	/**
@@ -782,6 +524,20 @@ public class Pile {
 		Collections.reverse(cards);
 	}
 
+	/**
+	 * Sets the face visibility of the cards in this pile to the specified state. 
+	 * 
+	 * @param faceUp - whether the faces of the cards in this pile should be visible  
+	 */
+	public void setFaceUp(boolean faceUp) {
+		for (Card card : cards) {
+			// Prevent NullPointerException (thrown if card null)
+			if (card != null) {
+				card.setFaceUp(faceUp);
+			}
+		}
+	}
+	
 	/**
 	 * Shuffles this pile.
 	 * Randomly permutes this pile using a default source of randomness.
@@ -814,23 +570,6 @@ public class Pile {
 		Collections.sort(cards, comparator.getComparator());
 	}
 	
-//	/**
-//	 * Sorts this pile according to the order induced by the specified comparator and in the specified direction. 
-//	 * This sort is guaranteed to be stable: equal cards will not be reordered as a result of the sort.
-//	 * 
-//	 * @param comparator - the comparator to determine the order of the pile
-//	 * @param ascendingUp - whether to place higher ranking cards towards the top of the pile 
-//	 * @see Collections#sort(java.util.List, java.util.Comparator) 
-//	 * @see CardComparator
-//	 */
-//	public void sort(CardComparator comparator, boolean ascendingUp) {
-//		if (ascendingUp) {
-//			Collections.sort(cards, comparator.getComparator());
-//		} else {
-//			Collections.sort(cards, comparator.getComparator().reversed());
-//		}
-//	}
-	
 	/**
 	 * Toggles the face visibility of the cards in this pile.
 	 * Cards that are face up will be turned face down, and cards that are face down will be turned face up. 
@@ -840,20 +579,6 @@ public class Pile {
 			// Prevent NullPointerException (thrown if card null)
 			if (card != null) {
 				card.setFaceUp(!card.isFaceUp());
-			}
-		}
-	}
-	
-	/**
-	 * Sets the face visibility of the cards in this pile to the specified state. 
-	 * 
-	 * @param faceUp - whether the faces of the cards in this pile should be visible  
-	 */
-	public void toggleFaceUp(boolean faceUp) {
-		for (Card card : cards) {
-			// Prevent NullPointerException (thrown if card null)
-			if (card != null) {
-				card.setFaceUp(faceUp);
 			}
 		}
 	}

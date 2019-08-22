@@ -18,8 +18,6 @@ package io.github.martindes01.pickcard;
  * <li>{@link #EIGHT}
  * <li>{@link #NINE}
  * <li>{@link #TEN}
- * <li>{@link #ELEVEN}
- * <li>{@link #TEN}
  * <li>{@link #JACK}
  * <li>{@link #QUEEN}
  * <li>{@link #KING}

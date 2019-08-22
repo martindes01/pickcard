@@ -68,38 +68,6 @@ public class Card {
 	
 	// Overrides
 	
-//	/**
-//	 * Creates and returns a deep clone of this card.
-//	 * A card contains only primitive fields and references to immutable objects.
-//	 * No fields in the card returned by {@code super.clone} need to be modified.
-//	 * 
-//	 * @return a deep clone of this instance of the {@code Card} class
-//	 * @throws CloneNotSupportedException if the {@code Card} class does not support the {@code Cloneable} interface.
-//	 * Subclasses that override the {@code clone} method can also throw this exception to indicate that an instance cannot be cloned.
-//	 * @see Cloneable
-//	 * @see Object#clone()
-//	 */
-//	@Override
-//	protected Object clone() throws CloneNotSupportedException {
-//		Card clone = null;
-//		try {
-//			clone = (Card) super.clone();
-//		} catch (CloneNotSupportedException e) {
-//			throw new RuntimeException(e);
-//		}
-//		return clone;
-//	}
-//	
-//	@Override
-//	public int compareTo(Card that) {
-//		int comp = Integer.compare(this.suit.getOrder(), that.suit.getOrder());
-//		if (comp != 0) {
-//			return comp;
-//		} else {
-//			return Integer.compare(this.rank.getOrder(), that.rank.getOrder());
-//		}		
-//	}
-	
 	/**
 	 * Returns a string representation of this card.
 	 * This is a formatted string containing the rank, suit and face visibility of this card.
